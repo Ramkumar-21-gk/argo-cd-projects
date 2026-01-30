@@ -1,14 +1,4 @@
----
-## ✅ README.md (Easy Version: App of Apps Pattern)
 
-````md
-# ✅ App of Apps Pattern in ArgoCD
-
-In this section, we will learn about the **App of Apps Pattern** in ArgoCD.
-
-This is a powerful method to manage **multiple applications** using one single **root application**.
-
----
 
 # ⭐ What is App of Apps Pattern?
 
