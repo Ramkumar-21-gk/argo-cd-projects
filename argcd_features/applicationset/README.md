@@ -1,4 +1,4 @@
-✅ README.md (Easy Version: ApplicationSets in ArgoCD)
+````md
 # ✅ ApplicationSets in ArgoCD
 
 In this section, we will learn about **ApplicationSets** in ArgoCD.
@@ -21,9 +21,9 @@ Normally:
 
 But in real setups, we manage:
 
-- Many microservices
-- Multiple environments (Dev, Stg, Prod)
-- Multiple clusters
+- Many microservices  
+- Multiple environments (Dev, Stg, Prod)  
+- Multiple clusters  
 
 So ApplicationSets solve this problem.
 
@@ -34,7 +34,7 @@ So ApplicationSets solve this problem.
 ✅ Less YAML files  
 ✅ Automatic app creation  
 ✅ Easy multi-cluster deployments  
-✅ True DRY (Don’t Repeat Yourself) GitOps
+✅ True DRY (Don’t Repeat Yourself)
 
 ---
 
@@ -81,8 +81,6 @@ Best for:
 
 # ✅ 1. List Generator Example
 
----
-
 ## Prerequisites
 
 - Kind cluster running  
@@ -105,14 +103,21 @@ Apply:
 
 ```bash
 kubectl apply -f list_generator.yml -n argocd
+````
 
-Step 2: Verify ApplicationSet
+---
+
+## Step 2: Verify ApplicationSet
 
 Run:
 
+```bash
 argocd appset list
+```
 
-Step 3: Verify Apps Created
+---
+
+## Step 3: Verify Apps Created
 
 ArgoCD automatically creates:
 
@@ -122,110 +127,170 @@ ArgoCD automatically creates:
 
 Check:
 
+```bash
 argocd app list
+```
 
-Step 4: Access Apps (Port Forward)
-Nginx
+---
+
+## Step 4: Access Apps (Port Forward)
+
+### Nginx
+
+```bash
 kubectl port-forward svc/nginx-service 8081:80 --address=0.0.0.0 &
-
+```
 
 Open:
 
+```text
 http://localhost:8081
+```
 
-Online Shop
+---
+
+### Online Shop
+
+```bash
 kubectl port-forward svc/online-shop-service 3000:3000 --address=0.0.0.0 &
-
+```
 
 Open:
 
+```text
 http://localhost:3000
+```
 
-Chai App
+---
+
+### Chai App
+
+```bash
 kubectl port-forward svc/chai-app-service 3001:3000 --address=0.0.0.0 &
-
+```
 
 Open:
 
+```text
 http://localhost:3001
+```
 
-Delete ApplicationSet
+---
+
+## Delete ApplicationSet
+
+```bash
 argocd appset delete argocd/demo-list
+```
 
-✅ 2. Cluster Generator Example
+---
 
-Cluster generator deploys the same app to all clusters.
+# ✅ 2. Cluster Generator Example
 
-Extra Requirement
+Cluster generator deploys the same app to **all clusters**.
+
+## Extra Requirement
 
 At least 2 clusters registered in ArgoCD.
 
 Example:
 
-in-cluster
-
-argocd-cluster
+* in-cluster
+* argocd-cluster
 
 Add cluster:
 
+```bash
 argocd cluster add kind-argocd-cluster
+```
 
-Apply Cluster Generator Manifest
+---
+
+## Apply Cluster Generator Manifest
 
 Use:
 
-📌 cluster_generator.yml
+📌 `cluster_generator.yml`
 
 Apply:
 
+```bash
 kubectl apply -f cluster_generator.yml -n argocd
+```
 
-Verify Apps
+---
+
+## Verify Apps
+
+```bash
 argocd app list
-
+```
 
 You will see apps created for each cluster:
 
 ✅ in-cluster-chai-app
 ✅ kind-argocd-cluster-chai-app
 
-Access App
-kubectl port-forward --context kind-argocd-cluster svc/chai-app-service 3002:3000 --address=0.0.0.0 &
+---
 
+## Access App
+
+```bash
+kubectl port-forward --context kind-argocd-cluster svc/chai-app-service 3002:3000 --address=0.0.0.0 &
+```
 
 Open:
 
+```text
 http://localhost:3002
+```
 
-Delete ApplicationSet
+---
+
+## Delete ApplicationSet
+
+```bash
 argocd appset delete argocd/demo-cluster
+```
 
-✅ 3. Git Generator Example
+---
+
+# ✅ 3. Git Generator Example
 
 Git generator creates apps by scanning folders inside Git repo.
 
-Requirement
+## Requirement
 
 Your repo should have multiple app folders like:
 
+```text
 git_generator/
   apache/
   online-shop/
   chai-app/
+```
 
-Apply Git Generator Manifest
+---
+
+## Apply Git Generator Manifest
 
 Use:
 
-📌 git_generator.yml
+📌 `git_generator.yml`
 
 Apply:
 
+```bash
 kubectl apply -f git_generator.yml -n argocd
+```
 
-Verify Apps Created
+---
+
+## Verify Apps Created
+
+```bash
 argocd app list
-
+```
 
 Apps created automatically:
 
@@ -233,47 +298,39 @@ Apps created automatically:
 ✅ online-shop-git
 ✅ chai-app-git
 
-Delete ApplicationSet
+---
+
+## Delete ApplicationSet
+
+```bash
 argocd appset delete argocd/demo-git
+```
 
-✅ Generator Comparison
-Generator Type	Works By	Best For
-List Generator	Fixed list of apps	Small known set of apps
-Cluster Generator	Deploy app to all clusters	Multi-cluster environments
-Git Generator	Scan Git folders automatically	Microservices + Monorepos
-✅ Key Takeaways
+---
 
-ApplicationSet = One YAML → Many Applications
+# ✅ Generator Comparison
 
-Generators help create apps automatically
+| Generator Type        | Works By                       | Best For                   |
+| --------------------- | ------------------------------ | -------------------------- |
+| **List Generator**    | Fixed list of apps             | Small known set of apps    |
+| **Cluster Generator** | Deploy app to all clusters     | Multi-cluster environments |
+| **Git Generator**     | Scan Git folders automatically | Microservices + Monorepos  |
 
-Best for large GitOps and enterprise deployments
+---
 
-Reduces duplication and simplifies management
+# ✅ Key Takeaways
+
+* **ApplicationSet = One YAML → Many Applications**
+* Generators help create apps automatically
+* Best for large GitOps and enterprise deployments
+* Reduces duplication and simplifies management
 
 📌 Official Docs:
-https://argo-cd.readthedocs.io/en/stable/operator-manual/applicationset/
+[https://argo-cd.readthedocs.io/en/stable/operator-manual/applicationset/](https://argo-cd.readthedocs.io/en/stable/operator-manual/applicationset/)
+
+---
 
 ✅ Happy Learning!
 
-
----
-
-# ✅ Done!
-
-Now your ApplicationSet section is:
-
-✅ Easy English  
-✅ Clean README Format  
-✅ Beginner Friendly  
-✅ Short + Professional  
-
----
-
-If you want next, I can also give:
-
-- Full working YAML examples for all 3 generators  
-- AppProjects + ApplicationSets combined enterprise setup  
-- Best Folder Structure for GitOps Repo  
-
-Just tell me.
+```
+```
