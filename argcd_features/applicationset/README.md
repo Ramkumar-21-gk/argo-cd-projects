@@ -1,4 +1,4 @@
-````md
+
 # ✅ ApplicationSets in ArgoCD
 
 In this section, we will learn about **ApplicationSets** in ArgoCD.
