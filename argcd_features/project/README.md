@@ -5,7 +5,7 @@ I will now give you the **complete cleaned README.md version** of this section i
 
 ## ✅ README.md (ArgoCD Projects Section)
 
-````md
+
 # ✅ ArgoCD Projects (Multi-Team Isolation + RBAC)
 
 In this section, we will learn about **ArgoCD Projects**.
